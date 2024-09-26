@@ -21,16 +21,16 @@ env:
   FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
 
 jobs:
-  CheckIn:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-      - name: Run Project
-        run: |
-          cd workflows
-          npm
-          npm checkin
+ CheckIn:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+    - name: Run Project
+      run: |
+        cd workflows
+        npm install
+        npm run checkin
 
 #  SeaGold:
 #    needs: CheckIn
@@ -41,5 +41,5 @@ jobs:
 #      - name: Run Project
 #        run: |
 #          cd workflows
-#          npm
-#          npm seagold
+#         npm install
+#          npm run seagold
