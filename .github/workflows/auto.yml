@@ -2,7 +2,7 @@ name: Auto
 
 on:
   schedule:
-    - cron: "30 22 * * *" # 北京时间上午06:30
+    - cron: "30 0 * * *" # UTC时间 00:30 对应北京时间上午08:30
   workflow_dispatch:
 
 env:
@@ -21,25 +21,28 @@ env:
   FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
 
 jobs:
- CheckIn:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-    - name: Run Project
-      run: |
-        cd workflows
-        npm install
-        npm run checkin
+  CheckIn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # 设置Node.js版本为16或最新版本
+      - name: Install Dependencies and Run Project
+        run: |
+          cd workflows
+          npm install
+          npm run checkin
+        continue-on-error: true  # 失败后继续执行
 
-#  SeaGold:
-#    needs: CheckIn
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - uses: actions/setup-node@v2
-#      - name: Run Project
-#        run: |
-#          cd workflows
-#         npm install
-#          npm run seagold
+  # SeaGold:
+  #    needs: CheckIn
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      - uses: actions/setup-node@v2
+  #      - name: Run SeaGold Project
+  #        run: |
+  #          cd workflows
+  #          npm install
+  #          npm run seagold
